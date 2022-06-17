@@ -35,6 +35,11 @@ class ScreenHome extends StatelessWidget {
                   future: MovieDb().getAllMovies(),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<DataModel>> allmovies) {
+                    if (allmovies.data == null) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
                     return ListView(
                       children: [
                         Stack(

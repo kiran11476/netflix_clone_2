@@ -104,7 +104,9 @@ class ScreenHome extends StatelessWidget {
                               child: ListView(
                                 scrollDirection: Axis.horizontal,
                                 children: List.generate(
-                                    10, (index) => NumberCard(index: index)),
+                                  10,
+                                  (index) => NumberCard(index: index),
+                                ),
                               ),
                             )
                           ],

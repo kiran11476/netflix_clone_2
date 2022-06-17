@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:netflix/infrastucture/api.dart';
+import 'package:netflix/model/datamodel.dart/datamodel.dart';
 
 import 'package:netflix/presentation/widgets/app_bar_widgets.dart';
 
@@ -54,41 +56,53 @@ class Section2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        SizedBox(
-          width: size.width,
-          height: size.width,
-          child: Stack(
-            alignment: Alignment.center,
+    return FutureBuilder(
+        future: MovieDb().getAllMovies(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<DataModel>> allmovies) {
+          if (allmovies.data == null) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Column(
             children: [
-              CircleAvatar(
-                backgroundColor: Colors.grey.withOpacity(0.5),
-                radius: size.width * 0.3,
+              SizedBox(
+                width: size.width,
+                height: size.width,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.grey.withOpacity(0.5),
+                      radius: size.width * 0.3,
+                    ),
+                    DownloadsImageWidgets(
+                      imagelist: allmovies.data![0].posterPath!.toString(),
+                      margin:
+                          const EdgeInsets.only(left: 130, bottom: 50, top: 50),
+                      angle: 20,
+                      size: Size(size.width * 0.4, size.width * 0.58),
+                    ),
+                    DownloadsImageWidgets(
+                      imagelist: allmovies.data![1].posterPath!,
+                      radius: 20,
+                      margin: const EdgeInsets.only(
+                          right: 130, bottom: 50, top: 50),
+                      angle: -20,
+                      size: Size(size.width * 0.4, size.width * 0.58),
+                    ),
+                    DownloadsImageWidgets(
+                      imagelist: imagelist[2],
+                      margin: const EdgeInsets.only(bottom: 10),
+                      size: Size(size.width * 0.45, size.width * 0.64),
+                    )
+                  ],
+                ),
               ),
-              DownloadsImageWidgets(
-                imagelist: imagelist[0],
-                margin: EdgeInsets.only(left: 130, bottom: 50, top: 50),
-                angle: 20,
-                size: Size(size.width * 0.4, size.width * 0.58),
-              ),
-              DownloadsImageWidgets(
-                imagelist: imagelist[1],
-                radius: 20,
-                margin: EdgeInsets.only(right: 130, bottom: 50, top: 50),
-                angle: -20,
-                size: Size(size.width * 0.4, size.width * 0.58),
-              ),
-              DownloadsImageWidgets(
-                imagelist: imagelist[2],
-                margin: EdgeInsets.only(bottom: 10),
-                size: Size(size.width * 0.45, size.width * 0.64),
-              )
             ],
-          ),
-        ),
-      ],
-    );
+          );
+        });
   }
 }
 

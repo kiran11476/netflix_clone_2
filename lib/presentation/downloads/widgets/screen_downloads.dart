@@ -78,14 +78,14 @@ class Section2 extends StatelessWidget {
                       radius: size.width * 0.3,
                     ),
                     DownloadsImageWidgets(
-                      imagelist: allmovies.data![0].posterPath!.toString(),
+                      imagelist: imagelist[0],
                       margin:
                           const EdgeInsets.only(left: 130, bottom: 50, top: 50),
                       angle: 20,
                       size: Size(size.width * 0.4, size.width * 0.58),
                     ),
                     DownloadsImageWidgets(
-                      imagelist: allmovies.data![1].posterPath!,
+                      imagelist: imagelist[1],
                       radius: 20,
                       margin: const EdgeInsets.only(
                           right: 130, bottom: 50, top: 50),
